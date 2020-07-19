@@ -5,6 +5,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var webhookRouter = require('./routes/webhook');
+const {redditScheduler, sendToTelegramGroupScheduler} = require('./services/scheduler.service');
 
 var app = express();
 
@@ -16,5 +17,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/webhook', webhookRouter);
+
+redditScheduler(1 * 60 * 1000);
+sendToTelegramGroupScheduler(1 * 60 * 1000);
 
 module.exports = app;

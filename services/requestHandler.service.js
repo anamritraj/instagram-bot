@@ -1,7 +1,8 @@
 const { sendMessage } = require("./telegram.service");
 const {optimizeImage} = require("./optimization.service");
+const { uploadPhotoToInstagram } = require("./instagram/instagram.service");
 
-const handleRequest = (request) => {
+const handleRequest = async (request) => {
     console.log("A new request arrived");
 
     if(!request.message.reply_to_message) return;
@@ -14,7 +15,11 @@ const handleRequest = (request) => {
             imageURL: imageToBePosted,
             caption: imageCaption
         });
-        optimizeImage(imageToBePosted);
+        await optimizeImage(imageToBePosted);
+        uploadPhotoToInstagram({
+            caption: imageCaption,
+            path: 'file.jpg'
+        })
     }else{
         // This is not in specific format
         // send a message back to the group

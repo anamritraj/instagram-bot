@@ -35,4 +35,7 @@ const sendToTelegramGroupScheduler = (interval) => {
     }, interval)
 }
 
-
+module.exports = {
+    redditScheduler,
+    sendToTelegramGroupScheduler
+}
